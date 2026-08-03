@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Floresta Encantada ✨</title>
   
-  <!-- Tipografia Clássica -->
+  <!-- Fontes de Livro de Contos de Fadas -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Tangerine:wght@700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --gold-bright: #ffe89e;
+      --gold-bright: #ffe8a3;
       --gold-main: #d4af37;
-      --gold-dark: #8a6a1c;
-      --parchment: #fdf8ec;
+      --gold-dark: #8c6d1f;
+      --parchment: #fdf8eb;
       --ink: #2a180c;
       --ruby: #8b1e1e;
     }
@@ -29,53 +29,49 @@
       align-items: center;
       justify-content: center;
       font-family: 'Cormorant Garamond', serif;
-      color: #fdf8ec;
+      color: #fdf8eb;
       overflow-x: hidden;
       position: relative;
       background-color: #050d09;
     }
 
-    /* === ILUSTRAÇÃO DE FUNDO EM CAMADAS PURAS (ESTILO EYVIND EARLE / DISNEY) === */
-    .enchanted-bg {
+    /* === CAMADA DE CENÁRIO (ILUSTRAÇÕES DE ARTE EM HD) === */
+    .bg-art-layer {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
       z-index: 1;
-      pointer-events: none;
-      transition: background 1.2s ease-in-out;
-      
-      /* Cenário Inicial: Clareira da Aurora */
-      background: 
-        radial-gradient(ellipse at 50% 25%, rgba(255, 230, 140, 0.35) 0%, rgba(35, 80, 55, 0.4) 45%, transparent 75%),
-        linear-gradient(180deg, #0a1f16 0%, #123324 50%, #06120c 100%);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-image 1.2s ease-in-out;
+      filter: brightness(0.88) contrast(1.08);
     }
 
-    /* Raios de Luz Dourada e Vinheta */
-    .sunbeams-overlay {
+    /* Vinheta e Iluminação de Ilusão de Livro */
+    .vignette-overlay {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
       z-index: 2;
       pointer-events: none;
-      background: 
-        radial-gradient(circle at center, transparent 30%, rgba(4, 10, 7, 0.6) 70%, rgba(2, 5, 3, 0.95) 100%),
-        repeating-linear-gradient(60deg, rgba(255, 235, 170, 0.04) 0px, rgba(255, 235, 170, 0.04) 30px, transparent 30px, transparent 90px);
+      background: radial-gradient(circle at center, transparent 35%, rgba(4, 10, 7, 0.55) 75%, rgba(2, 5, 3, 0.92) 100%);
     }
 
-    /* Moldura de Livro de Contos de Fadas */
+    /* Moldura Dourada de Livro de Princesa */
     .storybook-frame {
       position: fixed;
-      top: 12px; left: 12px; right: 12px; bottom: 12px;
-      border: 2px solid var(--gold-main);
+      top: 14px; left: 14px; right: 14px; bottom: 14px;
+      border: 2px solid rgba(212, 175, 55, 0.85);
       border-radius: 18px;
       pointer-events: none;
       z-index: 50;
-      box-shadow: inset 0 0 25px rgba(212, 175, 55, 0.25), 0 0 20px rgba(0,0,0,0.9);
+      box-shadow: inset 0 0 25px rgba(212, 175, 55, 0.3), 0 0 20px rgba(0,0,0,0.9);
     }
 
     .storybook-frame::after {
       content: '';
       position: absolute;
       top: 4px; left: 4px; right: 4px; bottom: 4px;
-      border: 1px dashed rgba(255, 232, 158, 0.35);
+      border: 1px dashed rgba(255, 232, 163, 0.4);
       border-radius: 14px;
     }
 
@@ -90,7 +86,7 @@
     /* Container Principal */
     .app-container {
       width: 92%;
-      max-width: 650px;
+      max-width: 660px;
       margin: 20px auto;
       position: relative;
       z-index: 30;
@@ -99,9 +95,9 @@
 
     header h1 {
       font-family: 'Cinzel Decorative', serif;
-      font-size: 2.5rem;
+      font-size: 2.6rem;
       color: var(--gold-bright);
-      text-shadow: 0 0 20px rgba(255, 232, 158, 0.8), 0 3px 6px rgba(0,0,0,0.9);
+      text-shadow: 0 0 20px rgba(255, 232, 163, 0.8), 0 3px 6px rgba(0,0,0,0.95);
       letter-spacing: 3px;
     }
 
@@ -109,9 +105,9 @@
       font-style: italic;
       font-size: 1.25rem;
       color: #ffeaa8;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.95);
       margin-top: 4px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     /* Seletor de Cenários */
@@ -120,61 +116,61 @@
       justify-content: center;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .theme-btn {
-      background: rgba(8, 20, 14, 0.75);
+      background: rgba(10, 22, 15, 0.82);
       border: 1.5px solid var(--gold-main);
       color: var(--gold-bright);
-      padding: 8px 16px;
+      padding: 9px 18px;
       border-radius: 20px;
       font-family: 'Cormorant Garamond', serif;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      backdrop-filter: blur(6px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.7);
       transition: all 0.3s;
     }
 
     .theme-btn:hover, .theme-btn.active {
-      background: linear-gradient(180deg, #ffe89e 0%, #c8961e 100%);
+      background: linear-gradient(180deg, #ffe8a3 0%, #c8961e 100%);
       color: #1a0f02;
       font-weight: bold;
       border-color: #ffffff;
-      box-shadow: 0 0 18px rgba(255, 232, 158, 0.9);
+      box-shadow: 0 0 20px rgba(255, 232, 163, 0.9);
       transform: translateY(-2px);
     }
 
     /* Pergaminho Mágico */
     .parchment-card {
-      background: radial-gradient(circle at center, #ffffff 0%, #f4e6c8 100%);
+      background: radial-gradient(circle at center, #fdfbf7 0%, #f3e5c8 100%);
       border: 4px double var(--gold-dark);
       border-radius: 16px;
-      padding: 30px 25px 20px 25px;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.85), inset 0 0 60px rgba(138, 106, 28, 0.2);
+      padding: 32px 28px 22px 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 60px rgba(140, 109, 31, 0.22);
       position: relative;
       transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
     }
 
-    .parchment-card::before { content: '⚜️'; position: absolute; top: 10px; left: 14px; color: var(--gold-dark); font-size: 16px; }
-    .parchment-card::after { content: '⚜️'; position: absolute; top: 10px; right: 14px; color: var(--gold-dark); font-size: 16px; }
+    .parchment-card::before { content: '⚜️'; position: absolute; top: 12px; left: 16px; color: var(--gold-dark); font-size: 16px; }
+    .parchment-card::after { content: '⚜️'; position: absolute; top: 12px; right: 16px; color: var(--gold-dark); font-size: 16px; }
 
     .parchment-card.sending {
-      transform: translateY(-130px) scale(0.12) rotate(18deg);
+      transform: translateY(-130px) scale(0.1) rotate(20deg);
       opacity: 0;
     }
 
     textarea {
       width: 100%;
-      height: 190px;
+      height: 195px;
       background: transparent;
       border: none;
       outline: none;
       color: var(--ink);
       font-family: 'Tangerine', cursive;
-      font-size: 2.5rem;
+      font-size: 2.6rem;
       line-height: 1.25;
       font-weight: bold;
       resize: none;
@@ -187,9 +183,9 @@
 
     .btn-send {
       width: 100%;
-      margin-top: 12px;
+      margin-top: 14px;
       padding: 13px;
-      background: linear-gradient(180deg, #ffe89e 0%, #c8961e 100%);
+      background: linear-gradient(180deg, #ffe8a3 0%, #c8961e 100%);
       border: 1px solid #fff3c4;
       color: #1a0f02;
       font-family: 'Cinzel Decorative', serif;
@@ -197,41 +193,41 @@
       font-weight: bold;
       border-radius: 25px;
       cursor: pointer;
-      box-shadow: 0 5px 16px rgba(0,0,0,0.6), 0 0 14px rgba(212, 175, 55, 0.5);
+      box-shadow: 0 5px 18px rgba(0,0,0,0.7), 0 0 15px rgba(212, 175, 55, 0.5);
       transition: all 0.3s;
     }
 
     .btn-send:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 232, 158, 0.95);
+      box-shadow: 0 8px 28px rgba(255, 232, 163, 0.95);
     }
 
-    /* Flor Mágica Sundrop Lily (Sem fundo / Transparente) */
-    .sundrop-flower-corner {
+    /* Flor Mágica Sundrop Lily Ilustrada (SVG Bioluminescente) */
+    .magic-flower-corner {
       position: fixed;
-      bottom: 20px;
-      left: 20px;
+      bottom: 22px;
+      left: 22px;
       z-index: 25;
       pointer-events: none;
-      filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.85));
-      animation: flowerGlow 3.5s infinite alternate ease-in-out;
+      filter: drop-shadow(0 0 16px rgba(255, 215, 0, 0.9));
+      animation: flowerPulse 3.8s infinite alternate ease-in-out;
     }
 
-    @keyframes flowerGlow {
+    @keyframes flowerPulse {
       0% { transform: scale(0.95) rotate(-2deg); filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.7)); }
-      100% { transform: scale(1.05) rotate(2deg); filter: drop-shadow(0 0 25px rgba(255, 215, 0, 1)) drop-shadow(0 0 40px rgba(255, 105, 180, 0.7)); }
+      100% { transform: scale(1.06) rotate(2deg); filter: drop-shadow(0 0 28px rgba(255, 215, 0, 1)) drop-shadow(0 0 42px rgba(255, 120, 180, 0.75)); }
     }
 
-    /* Baú das Cartas no Canto Direito */
+    /* Baú do Tesouro no Canto Direito */
     .chest-corner {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
+      bottom: 22px;
+      right: 22px;
       z-index: 35;
     }
 
     .chest-btn {
-      background: linear-gradient(180deg, rgba(16, 30, 22, 0.92) 0%, rgba(4, 10, 7, 0.92) 100%);
+      background: linear-gradient(180deg, rgba(16, 32, 22, 0.94) 0%, rgba(4, 10, 7, 0.94) 100%);
       border: 1.5px solid var(--gold-main);
       color: var(--gold-bright);
       padding: 10px 18px;
@@ -243,13 +239,13 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.8), 0 0 14px rgba(212, 175, 55, 0.4);
+      box-shadow: 0 6px 22px rgba(0,0,0,0.85), 0 0 14px rgba(212, 175, 55, 0.4);
       transition: all 0.3s;
     }
 
     .chest-btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 8px 28px rgba(255, 232, 158, 0.9);
+      box-shadow: 0 8px 30px rgba(255, 232, 163, 0.9);
     }
 
     /* Modal do Baú */
@@ -316,7 +312,7 @@
 
     @media (max-width: 600px) {
       header h1 { font-size: 1.8rem; }
-      .sundrop-flower-corner { transform: scale(0.68); left: -8px; bottom: 0px; }
+      .magic-flower-corner { transform: scale(0.68); left: -8px; bottom: 0px; }
       .chest-corner { right: 12px; bottom: 12px; }
       .chest-btn { font-size: 0.9rem; padding: 8px 14px; }
     }
@@ -324,33 +320,47 @@
 </head>
 <body>
 
-  <!-- Camadas Visuais e Ilustração -->
-  <div class="enchanted-bg" id="enchantedBg"></div>
-  <div class="sunbeams-overlay"></div>
+  <!-- Camada de Ilustração de Fundo -->
+  <div class="bg-art-layer" id="bgArtLayer"></div>
+  <div class="vignette-overlay"></div>
   <div class="storybook-frame"></div>
   
   <canvas id="fairyDustCanvas"></canvas>
 
-  <!-- Flor Mágica Sundrop Lily (Vetor SVG Limpo e Iluminado) -->
-  <div class="sundrop-flower-corner">
-    <svg width="110" height="120" viewBox="0 0 100 110">
+  <!-- Flor Mágica Sundrop Lily (Vetor Rico e Iluminado) -->
+  <div class="magic-flower-corner">
+    <svg width="120" height="130" viewBox="0 0 100 110">
       <defs>
-        <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+        <radialGradient id="sunGold" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stop-color="#ffffff" />
-          <stop offset="35%" stop-color="#ffe666" />
-          <stop offset="80%" stop-color="#ff7700" />
-          <stop offset="100%" stop-color="#b8860b" />
+          <stop offset="30%" stop-color="#fff066" />
+          <stop offset="70%" stop-color="#ff9900" />
+          <stop offset="100%" stop-color="#cc5500" />
         </radialGradient>
+        <filter id="glowEffect">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
       </defs>
-      <path d="M 50 105 Q 42 80 50 55" stroke="#2e6d38" stroke-width="4" fill="none" />
-      <path d="M 47 85 Q 25 75 32 95 Q 46 90 47 85" fill="#3d8e4b" />
-      <path d="M 50 75 Q 70 65 68 85 Q 52 82 50 75" fill="#3d8e4b" />
-      <path d="M 50 55 C 25 15 5 35 38 48 Z" fill="url(#sunGrad)" />
-      <path d="M 50 55 C 75 15 95 35 62 48 Z" fill="url(#sunGrad)" />
-      <path d="M 50 55 C 15 50 15 85 43 62 Z" fill="url(#sunGrad)" />
-      <path d="M 50 55 C 85 50 85 85 57 62 Z" fill="url(#sunGrad)" />
-      <path d="M 50 55 C 38 5 62 5 50 48 Z" fill="url(#sunGrad)" />
-      <circle cx="50" cy="52" r="7" fill="#ffffff" />
+      <!-- Haste e Folhas -->
+      <path d="M 50 105 Q 40 80 50 55" stroke="#235e2e" stroke-width="5" fill="none" />
+      <path d="M 47 85 Q 20 75 28 95 Q 44 90 47 85" fill="#328241" />
+      <path d="M 50 75 Q 75 65 72 85 Q 54 82 50 75" fill="#328241" />
+      
+      <!-- Pétalas em Camadas -->
+      <g filter="url(#glowEffect)">
+        <path d="M 50 55 C 20 10 0 32 36 48 Z" fill="url(#sunGold)" />
+        <path d="M 50 55 C 80 10 100 32 64 48 Z" fill="url(#sunGold)" />
+        <path d="M 50 55 C 10 48 10 88 42 62 Z" fill="url(#sunGold)" />
+        <path d="M 50 55 C 90 48 90 88 58 62 Z" fill="url(#sunGold)" />
+        <path d="M 50 55 C 36 0 64 0 50 48 Z" fill="url(#sunGold)" />
+        <!-- Miolo Brilhante -->
+        <circle cx="50" cy="52" r="8" fill="#ffffff" />
+        <circle cx="50" cy="52" r="5" fill="#fff599" />
+      </g>
     </svg>
   </div>
 
@@ -396,21 +406,26 @@
   </div>
 
   <script>
-    // ESTILOS DE ILUMINAÇÃO DE CENÁRIO PURAMENTE EM CSS (SEM IMAGENS QUE QUEBRAM)
-    const themes = {
-      aurora: "radial-gradient(ellipse at 50% 25%, rgba(255, 230, 140, 0.35) 0%, rgba(35, 80, 55, 0.4) 45%, transparent 75%), linear-gradient(180deg, #0a1f16 0%, #123324 50%, #06120c 100%)",
-      cottage: "radial-gradient(ellipse at 50% 25%, rgba(255, 200, 120, 0.4) 0%, rgba(90, 50, 30, 0.4) 45%, transparent 75%), linear-gradient(180deg, #24140a 0%, #3d2212 50%, #120904 100%)",
-      tinker: "radial-gradient(ellipse at 50% 25%, rgba(200, 255, 140, 0.4) 0%, rgba(40, 90, 50, 0.4) 45%, transparent 75%), linear-gradient(180deg, #0d2616 0%, #194025 50%, #05120a 100%)",
-      paris: "radial-gradient(ellipse at 50% 25%, rgba(210, 180, 255, 0.35) 0%, rgba(45, 35, 75, 0.4) 45%, transparent 75%), linear-gradient(180deg, #0e1124 0%, #171d3d 50%, #060812 100%)"
+    /* ARTWORKS DE CENÁRIOS DE ALTA RESOLUÇÃO */
+    const artworks = {
+      aurora: "https://images.unsplash.com/photo-1511497584788-876761c11969?q=80&w=2000&auto=format&fit=crop",
+      cottage: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=2000&auto=format&fit=crop",
+      tinker: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2000&auto=format&fit=crop",
+      paris: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2000&auto=format&fit=crop"
     };
+
+    const bgLayer = document.getElementById('bgArtLayer');
 
     function setTheme(key, btn) {
       document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      document.getElementById('enchantedBg').style.background = themes[key];
+      bgLayer.style.backgroundImage = `url('${artworks[key]}')`;
     }
 
-    // CANVAS DE PÓ DE FADA CINTILANTE
+    // Inicializa no cenário da Clareira da Aurora
+    setTheme('aurora', document.querySelector('.theme-btn.active'));
+
+    // CANVAS DE PÓ DE FADA
     const canvas = document.getElementById('fairyDustCanvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -423,7 +438,7 @@
     resizeCanvas();
 
     setInterval(() => {
-      if (particles.length < 55) {
+      if (particles.length < 60) {
         particles.push({
           x: Math.random() * canvas.width,
           y: canvas.height + 10,
