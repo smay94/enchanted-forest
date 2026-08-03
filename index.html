@@ -5,137 +5,117 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Floresta Encantada ✨</title>
   
-  <!-- Fontes Mágicas Disney / Livro de Contos -->
+  <!-- Tipografia Clássica -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Tangerine:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Tangerine:wght@700&display=swap" rel="stylesheet">
 
   <style>
-    /* Design System - Era de Ouro Disney */
     :root {
-      --gold-light: #fef0be;
+      --gold-bright: #ffe89e;
       --gold-main: #d4af37;
-      --gold-dark: #8c6d1f;
-      --parchment-light: #fdf8eb;
-      --parchment-dark: #f3e5c8;
-      --ink-color: #2c1a0e;
-      --ruby-red: #8b1e1e;
+      --gold-dark: #8a6a1c;
+      --parchment: #fdf8ec;
+      --ink: #2a180c;
+      --ruby: #8b1e1e;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       min-height: 100vh;
-      font-family: 'Cormorant Garamond', serif;
-      color: #fdf8eb;
-      background-color: #0a140f;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      color: #fdf8ec;
       overflow-x: hidden;
       position: relative;
+      background-color: #050d09;
     }
 
-    /* Fundo Dinâmico com Transição Suave */
-    #bg-container {
+    /* === ILUSTRAÇÃO DE FUNDO EM CAMADAS PURAS (ESTILO EYVIND EARLE / DISNEY) === */
+    .enchanted-bg {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      transition: background-image 1s ease-in-out;
+      top: 0; left: 0; width: 100vw; height: 100vh;
       z-index: 1;
-      filter: brightness(0.85) contrast(1.05);
+      pointer-events: none;
+      transition: background 1.2s ease-in-out;
+      
+      /* Cenário Inicial: Clareira da Aurora */
+      background: 
+        radial-gradient(ellipse at 50% 25%, rgba(255, 230, 140, 0.35) 0%, rgba(35, 80, 55, 0.4) 45%, transparent 75%),
+        linear-gradient(180deg, #0a1f16 0%, #123324 50%, #06120c 100%);
     }
 
-    /* Vinheta Cinematográfica (Sombra Suave nas Bordas) */
-    .vignette-overlay {
+    /* Raios de Luz Dourada e Vinheta */
+    .sunbeams-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at center, transparent 30%, rgba(5, 12, 8, 0.6) 70%, rgba(2, 5, 3, 0.9) 100%);
+      top: 0; left: 0; width: 100vw; height: 100vh;
       z-index: 2;
       pointer-events: none;
+      background: 
+        radial-gradient(circle at center, transparent 30%, rgba(4, 10, 7, 0.6) 70%, rgba(2, 5, 3, 0.95) 100%),
+        repeating-linear-gradient(60deg, rgba(255, 235, 170, 0.04) 0px, rgba(255, 235, 170, 0.04) 30px, transparent 30px, transparent 90px);
     }
 
-    /* Moldura de Livro de Contos de Fadas (Dourada e Elegante) */
+    /* Moldura de Livro de Contos de Fadas */
     .storybook-frame {
       position: fixed;
-      top: 12px;
-      left: 12px;
-      right: 12px;
-      bottom: 12px;
-      border: 2px solid rgba(212, 175, 55, 0.6);
-      border-radius: 16px;
+      top: 12px; left: 12px; right: 12px; bottom: 12px;
+      border: 2px solid var(--gold-main);
+      border-radius: 18px;
       pointer-events: none;
       z-index: 50;
-      box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.2), 0 0 15px rgba(0, 0, 0, 0.8);
+      box-shadow: inset 0 0 25px rgba(212, 175, 55, 0.25), 0 0 20px rgba(0,0,0,0.9);
     }
 
     .storybook-frame::after {
       content: '';
       position: absolute;
-      top: 4px;
-      left: 4px;
-      right: 4px;
-      bottom: 4px;
-      border: 1px dashed rgba(255, 240, 190, 0.3);
-      border-radius: 12px;
+      top: 4px; left: 4px; right: 4px; bottom: 4px;
+      border: 1px dashed rgba(255, 232, 158, 0.35);
+      border-radius: 14px;
     }
 
-    /* Canvas Mágico de Pó de Fada */
-    #magicCanvas {
+    /* Canvas para Pó de Fada */
+    #fairyDustCanvas {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 10;
+      top: 0; left: 0; width: 100vw; height: 100vh;
       pointer-events: none;
+      z-index: 10;
     }
 
-    /* Container Principal Centrado */
-    .app-wrapper {
+    /* Container Principal */
+    .app-container {
+      width: 92%;
+      max-width: 650px;
+      margin: 20px auto;
       position: relative;
       z-index: 30;
-      width: 92%;
-      max-width: 660px;
-      margin: 20px auto;
       text-align: center;
     }
 
-    /* Título do Livro Mágico */
-    header {
-      margin-bottom: 20px;
-    }
-
-    h1 {
+    header h1 {
       font-family: 'Cinzel Decorative', serif;
       font-size: 2.5rem;
-      color: var(--gold-light);
-      text-shadow: 0 0 15px rgba(212, 175, 55, 0.8), 0 2px 5px rgba(0, 0, 0, 0.9);
+      color: var(--gold-bright);
+      text-shadow: 0 0 20px rgba(255, 232, 158, 0.8), 0 3px 6px rgba(0,0,0,0.9);
       letter-spacing: 3px;
     }
 
-    .subtitle {
+    header p {
       font-style: italic;
       font-size: 1.25rem;
-      color: #fce8b3;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+      color: #ffeaa8;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.9);
       margin-top: 4px;
+      margin-bottom: 20px;
     }
 
     /* Seletor de Cenários */
-    .scenario-nav {
+    .theme-selector {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
@@ -143,61 +123,46 @@
       margin-bottom: 20px;
     }
 
-    .scenario-btn {
-      background: rgba(10, 20, 14, 0.7);
-      border: 1px solid var(--gold-main);
-      color: var(--gold-light);
+    .theme-btn {
+      background: rgba(8, 20, 14, 0.75);
+      border: 1.5px solid var(--gold-main);
+      color: var(--gold-bright);
       padding: 8px 16px;
       border-radius: 20px;
       font-family: 'Cormorant Garamond', serif;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      backdrop-filter: blur(5px);
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      transition: all 0.3s;
     }
 
-    .scenario-btn:hover, .scenario-btn.active {
-      background: linear-gradient(180deg, #ffe082 0%, #c8961e 100%);
-      color: #1a0f03;
+    .theme-btn:hover, .theme-btn.active {
+      background: linear-gradient(180deg, #ffe89e 0%, #c8961e 100%);
+      color: #1a0f02;
       font-weight: bold;
       border-color: #ffffff;
-      box-shadow: 0 0 15px rgba(255, 224, 130, 0.8);
+      box-shadow: 0 0 18px rgba(255, 232, 158, 0.9);
       transform: translateY(-2px);
     }
 
-    /* Carta de Pergaminho Mágico */
+    /* Pergaminho Mágico */
     .parchment-card {
-      background: radial-gradient(circle at center, var(--parchment-light) 0%, var(--parchment-dark) 100%);
-      border: 3px double var(--gold-dark);
+      background: radial-gradient(circle at center, #ffffff 0%, #f4e6c8 100%);
+      border: 4px double var(--gold-dark);
       border-radius: 16px;
       padding: 30px 25px 20px 25px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), inset 0 0 50px rgba(140, 109, 31, 0.2);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.85), inset 0 0 60px rgba(138, 106, 28, 0.2);
       position: relative;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+      transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
     }
 
-    .parchment-card::before {
-      content: '⚜️';
-      position: absolute;
-      top: 10px;
-      left: 14px;
-      color: var(--gold-dark);
-      font-size: 16px;
-    }
-
-    .parchment-card::after {
-      content: '⚜️';
-      position: absolute;
-      top: 10px;
-      right: 14px;
-      color: var(--gold-dark);
-      font-size: 16px;
-    }
+    .parchment-card::before { content: '⚜️'; position: absolute; top: 10px; left: 14px; color: var(--gold-dark); font-size: 16px; }
+    .parchment-card::after { content: '⚜️'; position: absolute; top: 10px; right: 14px; color: var(--gold-dark); font-size: 16px; }
 
     .parchment-card.sending {
-      transform: translateY(-120px) scale(0.1) rotate(20deg);
+      transform: translateY(-130px) scale(0.12) rotate(18deg);
       opacity: 0;
     }
 
@@ -207,7 +172,7 @@
       background: transparent;
       border: none;
       outline: none;
-      color: var(--ink-color);
+      color: var(--ink);
       font-family: 'Tangerine', cursive;
       font-size: 2.5rem;
       line-height: 1.25;
@@ -216,49 +181,48 @@
     }
 
     textarea::placeholder {
-      color: rgba(44, 26, 14, 0.45);
+      color: rgba(42, 24, 12, 0.45);
       font-style: italic;
     }
 
-    /* Botão Mágico */
-    .btn-send-wish {
+    .btn-send {
       width: 100%;
       margin-top: 12px;
-      padding: 12px;
-      background: linear-gradient(180deg, #ffe58f 0%, #c8961e 100%);
+      padding: 13px;
+      background: linear-gradient(180deg, #ffe89e 0%, #c8961e 100%);
       border: 1px solid #fff3c4;
-      color: #201205;
+      color: #1a0f02;
       font-family: 'Cinzel Decorative', serif;
       font-size: 1rem;
       font-weight: bold;
       border-radius: 25px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 12px rgba(212, 175, 55, 0.5);
-      transition: all 0.3s ease;
+      box-shadow: 0 5px 16px rgba(0,0,0,0.6), 0 0 14px rgba(212, 175, 55, 0.5);
+      transition: all 0.3s;
     }
 
-    .btn-send-wish:hover {
+    .btn-send:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 22px rgba(255, 229, 143, 0.9);
+      box-shadow: 0 8px 25px rgba(255, 232, 158, 0.95);
     }
 
-    /* Flor Mágica Sundrop Lily no Canto Esquerdo */
-    .magic-flower-corner {
+    /* Flor Mágica Sundrop Lily (Sem fundo / Transparente) */
+    .sundrop-flower-corner {
       position: fixed;
       bottom: 20px;
       left: 20px;
       z-index: 25;
       pointer-events: none;
-      filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8));
-      animation: flowerPulse 4s infinite alternate ease-in-out;
+      filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.85));
+      animation: flowerGlow 3.5s infinite alternate ease-in-out;
     }
 
-    @keyframes flowerPulse {
-      0% { transform: scale(0.95) rotate(-2deg); filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7)); }
-      100% { transform: scale(1.05) rotate(2deg); filter: drop-shadow(0 0 25px rgba(255, 215, 0, 1)) drop-shadow(0 0 35px rgba(255, 105, 180, 0.6)); }
+    @keyframes flowerGlow {
+      0% { transform: scale(0.95) rotate(-2deg); filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.7)); }
+      100% { transform: scale(1.05) rotate(2deg); filter: drop-shadow(0 0 25px rgba(255, 215, 0, 1)) drop-shadow(0 0 40px rgba(255, 105, 180, 0.7)); }
     }
 
-    /* Baú do Tesouro no Canto Direito */
+    /* Baú das Cartas no Canto Direito */
     .chest-corner {
       position: fixed;
       bottom: 20px;
@@ -267,9 +231,9 @@
     }
 
     .chest-btn {
-      background: linear-gradient(180deg, rgba(18, 30, 22, 0.9) 0%, rgba(5, 12, 8, 0.9) 100%);
+      background: linear-gradient(180deg, rgba(16, 30, 22, 0.92) 0%, rgba(4, 10, 7, 0.92) 100%);
       border: 1.5px solid var(--gold-main);
-      color: var(--gold-light);
+      color: var(--gold-bright);
       padding: 10px 18px;
       border-radius: 25px;
       font-family: 'Cormorant Garamond', serif;
@@ -279,13 +243,13 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8), 0 0 12px rgba(212, 175, 55, 0.3);
-      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.8), 0 0 14px rgba(212, 175, 55, 0.4);
+      transition: all 0.3s;
     }
 
     .chest-btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 8px 25px rgba(255, 224, 130, 0.8);
+      box-shadow: 0 8px 28px rgba(255, 232, 158, 0.9);
     }
 
     /* Modal do Baú */
@@ -293,7 +257,7 @@
       display: none;
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(4, 10, 7, 0.85);
+      background: rgba(4, 10, 7, 0.88);
       backdrop-filter: blur(8px);
       z-index: 100;
       justify-content: center;
@@ -301,14 +265,14 @@
     }
 
     .vault-card {
-      background: #0d1a14;
+      background: #0a1811;
       border: 2px solid var(--gold-main);
       border-radius: 16px;
       width: 90%;
       max-width: 520px;
       max-height: 80vh;
       padding: 24px;
-      box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+      box-shadow: 0 0 35px rgba(212, 175, 55, 0.4);
       display: flex;
       flex-direction: column;
     }
@@ -322,68 +286,37 @@
       margin-bottom: 14px;
     }
 
-    .vault-header h2 {
-      font-family: 'Cinzel Decorative', serif;
-      color: var(--gold-light);
-      font-size: 1.3rem;
-    }
-
-    .close-btn {
-      background: transparent;
-      border: none;
-      color: var(--gold-light);
-      font-size: 1.8rem;
-      cursor: pointer;
-    }
-
-    .vault-content {
-      overflow-y: auto;
-      padding-right: 5px;
-    }
+    .vault-header h2 { font-family: 'Cinzel Decorative', serif; color: var(--gold-bright); font-size: 1.3rem; }
+    .close-btn { background: transparent; border: none; color: var(--gold-bright); font-size: 1.8rem; cursor: pointer; }
+    .vault-content { overflow-y: auto; padding-right: 5px; }
 
     .wish-item {
-      background: var(--parchment-light);
-      color: var(--ink-color);
+      background: var(--parchment);
+      color: var(--ink);
       padding: 16px;
       border-radius: 10px;
       margin-bottom: 12px;
       text-align: left;
-      border-left: 5px solid var(--ruby-red);
+      border-left: 5px solid var(--ruby);
       position: relative;
     }
 
     .wax-seal {
       position: absolute;
-      top: 10px;
-      right: 12px;
-      width: 26px;
-      height: 26px;
-      background: var(--ruby-red);
+      top: 10px; right: 12px;
+      width: 26px; height: 26px;
+      background: var(--ruby);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffd700;
-      font-size: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: #ffd700; font-size: 12px;
     }
 
-    .wish-date {
-      font-size: 0.85rem;
-      color: #7a5c38;
-      font-weight: bold;
-      margin-bottom: 4px;
-    }
-
-    .wish-text {
-      font-family: 'Tangerine', cursive;
-      font-size: 2.1rem;
-      line-height: 1.2;
-      font-weight: bold;
-    }
+    .wish-date { font-size: 0.85rem; color: #7a5c38; font-weight: bold; margin-bottom: 4px; }
+    .wish-text { font-family: 'Tangerine', cursive; font-size: 2.1rem; line-height: 1.2; font-weight: bold; }
 
     @media (max-width: 600px) {
-      h1 { font-size: 1.8rem; }
-      .magic-flower-corner { transform: scale(0.7); left: -5px; bottom: 5px; }
+      header h1 { font-size: 1.8rem; }
+      .sundrop-flower-corner { transform: scale(0.68); left: -8px; bottom: 0px; }
       .chest-corner { right: 12px; bottom: 12px; }
       .chest-btn { font-size: 0.9rem; padding: 8px 14px; }
     }
@@ -391,125 +324,94 @@
 </head>
 <body>
 
-  <!-- Fundo de Cenário com Transição Suave -->
-  <div id="bg-container"></div>
-  <div class="vignette-overlay"></div>
+  <!-- Camadas Visuais e Ilustração -->
+  <div class="enchanted-bg" id="enchantedBg"></div>
+  <div class="sunbeams-overlay"></div>
   <div class="storybook-frame"></div>
   
-  <canvas id="magicCanvas"></canvas>
+  <canvas id="fairyDustCanvas"></canvas>
 
-  <!-- Flor da Rapunzel em Vetor Iluminado Limpo -->
-  <div class="magic-flower-corner">
-    <svg width="100" height="110" viewBox="0 0 100 110">
+  <!-- Flor Mágica Sundrop Lily (Vetor SVG Limpo e Iluminado) -->
+  <div class="sundrop-flower-corner">
+    <svg width="110" height="120" viewBox="0 0 100 110">
       <defs>
-        <radialGradient id="petalGlow" cx="50%" cy="50%" r="50%">
+        <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stop-color="#ffffff" />
-          <stop offset="40%" stop-color="#ffe566" />
-          <stop offset="85%" stop-color="#ff7700" />
+          <stop offset="35%" stop-color="#ffe666" />
+          <stop offset="80%" stop-color="#ff7700" />
           <stop offset="100%" stop-color="#b8860b" />
         </radialGradient>
       </defs>
       <path d="M 50 105 Q 42 80 50 55" stroke="#2e6d38" stroke-width="4" fill="none" />
       <path d="M 47 85 Q 25 75 32 95 Q 46 90 47 85" fill="#3d8e4b" />
       <path d="M 50 75 Q 70 65 68 85 Q 52 82 50 75" fill="#3d8e4b" />
-      <path d="M 50 55 C 25 15 5 35 38 48 Z" fill="url(#petalGlow)" />
-      <path d="M 50 55 C 75 15 95 35 62 48 Z" fill="url(#petalGlow)" />
-      <path d="M 50 55 C 15 50 15 85 43 62 Z" fill="url(#petalGlow)" />
-      <path d="M 50 55 C 85 50 85 85 57 62 Z" fill="url(#petalGlow)" />
-      <path d="M 50 55 C 38 5 62 5 50 48 Z" fill="url(#petalGlow)" />
+      <path d="M 50 55 C 25 15 5 35 38 48 Z" fill="url(#sunGrad)" />
+      <path d="M 50 55 C 75 15 95 35 62 48 Z" fill="url(#sunGrad)" />
+      <path d="M 50 55 C 15 50 15 85 43 62 Z" fill="url(#sunGrad)" />
+      <path d="M 50 55 C 85 50 85 85 57 62 Z" fill="url(#sunGrad)" />
+      <path d="M 50 55 C 38 5 62 5 50 48 Z" fill="url(#sunGrad)" />
       <circle cx="50" cy="52" r="7" fill="#ffffff" />
     </svg>
   </div>
 
   <!-- Aplicação Principal -->
-  <div class="app-wrapper">
+  <div class="app-container">
     <header>
       <h1>FLORESTA ENCANTADA</h1>
-      <p class="subtitle">Escreva para o Universo e envie com mágica...</p>
+      <p>Escreva para o Universo e envie com mágica...</p>
     </header>
 
-    <!-- Navegação de Cenários -->
-    <nav class="scenario-nav">
-      <button class="scenario-btn active" onclick="changeScenario('aurora', this)">Clareira da Aurora</button>
-      <button class="scenario-btn" onclick="changeScenario('cottage', this)">Cabana das Fadas</button>
-      <button class="scenario-btn" onclick="changeScenario('tinker', this)">Refúgio de Tinker Bell</button>
-      <button class="scenario-btn" onclick="changeScenario('paris', this)">Noite em Paris</button>
-    </nav>
+    <!-- Troca de Cenários -->
+    <div class="theme-selector">
+      <button class="theme-btn active" onclick="setTheme('aurora', this)">Clareira da Aurora</button>
+      <button class="theme-btn" onclick="setTheme('cottage', this)">Cabana das Fadas</button>
+      <button class="theme-btn" onclick="setTheme('tinker', this)">Refúgio de Tinker Bell</button>
+      <button class="theme-btn" onclick="setTheme('paris', this)">Noite em Paris</button>
+    </div>
 
-    <!-- Carta de Pergaminho -->
+    <!-- Pergaminho de Escrita -->
     <div class="parchment-card" id="parchmentCard">
-      <textarea id="wishInput" placeholder="Querido Universo... escreva aqui seus desejos mais sinceros"></textarea>
-      <button class="btn-send-wish" onclick="sendWish()">Enviar ao Universo ✨</button>
+      <textarea id="wishText" placeholder="Querido Universo... escreva aqui seus desejos mais sinceros"></textarea>
+      <button class="btn-send" onclick="sendWish()">Enviar ao Universo ✨</button>
     </div>
   </div>
 
-  <!-- Baú do Tesouro -->
+  <!-- Baú das Cartas -->
   <div class="chest-corner">
     <button class="chest-btn" onclick="toggleVault()">
       <span>👑 Baú das Cartas</span>
-      <span style="background: var(--gold-main); color: #000; border-radius: 10px; padding: 2px 8px; font-size: 0.8rem;" id="wishCounter">0</span>
+      <span style="background: var(--gold-main); color: #000; border-radius: 10px; padding: 2px 8px; font-size: 0.8rem;" id="wishCount">0</span>
     </button>
   </div>
 
-  <!-- Modal de Cartas Guardadas -->
+  <!-- Modal do Baú -->
   <div class="vault-modal" id="vaultModal">
     <div class="vault-card">
       <div class="vault-header">
         <h2>👑 Baú dos Desejos Guardados</h2>
         <button class="close-btn" onclick="toggleVault()">&times;</button>
       </div>
-      <div class="vault-content" id="vaultContent"></div>
+      <div class="vault-content" id="vaultList"></div>
     </div>
   </div>
 
   <script>
-    /* 
-      CONFIGURAÇÃO DE IMAGENS
-      O código testa a imagem local do seu diretório primeiro.
-      Se não a encontrar, usa o fallback de alta resolução automaticamente.
-    */
-    const scenarios = {
-      aurora: {
-        local: "./fundo-aurora.jpg.jpg",
-        fallback: "https://images.unsplash.com/photo-1511497584788-876761c11969?auto=format&fit=crop&w=1920&q=80"
-      },
-      cottage: {
-        local: "./fundo-cabana.jpg",
-        fallback: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1920&q=80"
-      },
-      tinker: {
-        local: "./fundo-tinkerbell.jpg.jpg",
-        fallback: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1920&q=80"
-      },
-      paris: {
-        local: "./fundo-paris.jpg",
-        fallback: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1920&q=80"
-      }
+    // ESTILOS DE ILUMINAÇÃO DE CENÁRIO PURAMENTE EM CSS (SEM IMAGENS QUE QUEBRAM)
+    const themes = {
+      aurora: "radial-gradient(ellipse at 50% 25%, rgba(255, 230, 140, 0.35) 0%, rgba(35, 80, 55, 0.4) 45%, transparent 75%), linear-gradient(180deg, #0a1f16 0%, #123324 50%, #06120c 100%)",
+      cottage: "radial-gradient(ellipse at 50% 25%, rgba(255, 200, 120, 0.4) 0%, rgba(90, 50, 30, 0.4) 45%, transparent 75%), linear-gradient(180deg, #24140a 0%, #3d2212 50%, #120904 100%)",
+      tinker: "radial-gradient(ellipse at 50% 25%, rgba(200, 255, 140, 0.4) 0%, rgba(40, 90, 50, 0.4) 45%, transparent 75%), linear-gradient(180deg, #0d2616 0%, #194025 50%, #05120a 100%)",
+      paris: "radial-gradient(ellipse at 50% 25%, rgba(210, 180, 255, 0.35) 0%, rgba(45, 35, 75, 0.4) 45%, transparent 75%), linear-gradient(180deg, #0e1124 0%, #171d3d 50%, #060812 100%)"
     };
 
-    const bgContainer = document.getElementById('bg-container');
-
-    function changeScenario(key, btn) {
-      document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+    function setTheme(key, btn) {
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      
-      const item = scenarios[key];
-      
-      const img = new Image();
-      img.src = item.local;
-      img.onload = () => {
-        bgContainer.style.backgroundImage = `url('${item.local}')`;
-      };
-      img.onerror = () => {
-        bgContainer.style.backgroundImage = `url('${item.fallback}')`;
-      };
+      document.getElementById('enchantedBg').style.background = themes[key];
     }
 
-    // Inicializar no cenário da Aurora
-    changeScenario('aurora', document.querySelector('.scenario-btn.active'));
-
-    // CANVAS DE PÓ DE FADA
-    const canvas = document.getElementById('magicCanvas');
+    // CANVAS DE PÓ DE FADA CINTILANTE
+    const canvas = document.getElementById('fairyDustCanvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
 
@@ -521,7 +423,7 @@
     resizeCanvas();
 
     setInterval(() => {
-      if (particles.length < 50) {
+      if (particles.length < 55) {
         particles.push({
           x: Math.random() * canvas.width,
           y: canvas.height + 10,
@@ -532,23 +434,22 @@
           life: 1
         });
       }
-    }, 120);
+    }, 110);
 
     function createMagicBurst(x, y) {
-      for (let i = 0; i < 60; i++) {
+      for (let i = 0; i < 65; i++) {
         particles.push({
-          x: x,
-          y: y,
-          size: Math.random() * 5 + 1.5,
-          speedX: (Math.random() - 0.5) * 8,
-          speedY: (Math.random() - 0.5) * 8 - 2,
+          x: x, y: y,
+          size: Math.random() * 5.5 + 1.5,
+          speedX: (Math.random() - 0.5) * 8.5,
+          speedY: (Math.random() - 0.5) * 8.5 - 2,
           color: `hsl(${Math.random() * 55 + 35}, 100%, 80%)`,
           life: 1
         });
       }
     }
 
-    function animateCanvas() {
+    function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach((p, index) => {
         p.x += p.speedX;
@@ -563,12 +464,12 @@
 
         if (p.life <= 0) particles.splice(index, 1);
       });
-      requestAnimationFrame(animateCanvas);
+      requestAnimationFrame(animateParticles);
     }
-    animateCanvas();
+    animateParticles();
 
     // ÁUDIO MÁGICO
-    function playMagicChime() {
+    function playChime() {
       try {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         const audio = new AudioCtx();
@@ -588,9 +489,9 @@
       } catch(e) {}
     }
 
-    // SALVAR E ENVIAR DESEJOS
+    // ENVIAR E SALVAR DESEJO
     function sendWish() {
-      const input = document.getElementById('wishInput');
+      const input = document.getElementById('wishText');
       const text = input.value.trim();
       
       if (!text) {
@@ -601,40 +502,40 @@
       const card = document.getElementById('parchmentCard');
       const rect = card.getBoundingClientRect();
       
-      playMagicChime();
+      playChime();
       createMagicBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
 
       card.classList.add('sending');
 
       setTimeout(() => {
-        saveWishToStorage(text);
+        saveWish(text);
         input.value = '';
         card.classList.remove('sending');
-        renderVault();
+        updateVault();
       }, 850);
     }
 
-    function saveWishToStorage(text) {
-      const wishes = JSON.parse(localStorage.getItem('wishes_list') || '[]');
+    function saveWish(text) {
+      const wishes = JSON.parse(localStorage.getItem('my_wishes') || '[]');
       wishes.push({
         id: Date.now(),
         date: new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }),
         text: text
       });
-      localStorage.setItem('wishes_list', JSON.stringify(wishes));
+      localStorage.setItem('my_wishes', JSON.stringify(wishes));
     }
 
-    function renderVault() {
-      const wishes = JSON.parse(localStorage.getItem('wishes_list') || '[]');
-      document.getElementById('wishCounter').innerText = wishes.length;
+    function updateVault() {
+      const wishes = JSON.parse(localStorage.getItem('my_wishes') || '[]');
+      document.getElementById('wishCount').innerText = wishes.length;
       
-      const vaultContent = document.getElementById('vaultContent');
+      const list = document.getElementById('vaultList');
       if (wishes.length === 0) {
-        vaultContent.innerHTML = '<p style="text-align: center; color: var(--gold-light); font-style: italic; margin: 20px 0;">O baú ainda está vazio... Envie seu primeiro desejo!</p>';
+        list.innerHTML = '<p style="text-align: center; color: #ffeaa8; font-style: italic; margin: 20px 0;">O baú ainda está vazio... Envie seu primeiro desejo!</p>';
         return;
       }
 
-      vaultContent.innerHTML = wishes.map(w => `
+      list.innerHTML = wishes.map(w => `
         <div class="wish-item">
           <div class="wax-seal">✦</div>
           <div class="wish-date">📜 Enviado em ${w.date}</div>
@@ -648,7 +549,7 @@
       vault.style.display = vault.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    renderVault();
+    updateVault();
   </script>
 </body>
 </html>
