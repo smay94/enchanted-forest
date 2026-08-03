@@ -19,7 +19,10 @@
       --ink: #2a180c;
       --ruby: #8b1e1e;
       --room-glow: rgba(255, 232, 163, 0.4);
-      --current-paper: #fdf8eb; /* Dinâmico */
+      
+      /* Cores Dinâmicas do Papel */
+      --paper-start: #fdfbf7;
+      --paper-end: #f3e5c8;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -110,12 +113,10 @@
       pointer-events: none;
     }
 
-    /* SOLUÇÃO P/ TÍTULO SEM QUADRADO */
     .title-glow h1 {
       font-family: 'Cinzel Decorative', serif;
       font-size: 3.2rem;
       color: var(--gold-bright);
-      /* Brilho externo intenso para contraste */
       text-shadow: 0 0 35px rgba(255, 232, 163, 1), 0 3px 6px rgba(0,0,0,0.95);
       letter-spacing: 5px;
       margin-bottom: 12px;
@@ -221,13 +222,13 @@
     }
 
     .parchment-card {
-      background: radial-gradient(circle at center, #fdfbf7 0%, var(--current-paper) 100%);
+      background: radial-gradient(circle at center, var(--paper-start) 0%, var(--paper-end) 100%);
       border: 4px double var(--gold-dark);
       border-radius: 16px;
       padding: 30px 26px 20px 26px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.85), inset 0 0 60px rgba(140, 109, 31, 0.22);
       position: relative;
-      transition: all 0.8s ease;
+      transition: background 0.6s ease, transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
     }
 
     .parchment-card::before { content: '⚜️'; position: absolute; top: 12px; left: 16px; color: var(--gold-dark); font-size: 16px; }
@@ -276,22 +277,6 @@
     .btn-send:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 28px rgba(255, 232, 163, 0.95);
-    }
-
-    /* Flor Mágica Sundrop Lily */
-    .magic-flower-corner {
-      position: fixed;
-      bottom: 22px;
-      left: 22px;
-      z-index: 25;
-      pointer-events: none;
-      filter: drop-shadow(0 0 16px rgba(255, 215, 0, 0.9));
-      animation: flowerPulse 3.8s infinite alternate ease-in-out;
-    }
-
-    @keyframes flowerPulse {
-      0% { transform: scale(0.95) rotate(-2deg); filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.7)); }
-      100% { transform: scale(1.06) rotate(2deg); filter: drop-shadow(0 0 28px rgba(255, 215, 0, 1)) drop-shadow(0 0 42px rgba(255, 120, 180, 0.75)); }
     }
 
     /* Baú do Tesouro */
@@ -400,7 +385,6 @@
     @media (max-width: 600px) {
       .title-glow h1 { font-size: 2.4rem; }
       .title-glow p { font-size: 1.2rem; }
-      .magic-flower-corner { transform: scale(0.65); left: -10px; bottom: -5px; }
       .chest-corner { right: 12px; bottom: 12px; }
       .chest-btn { font-size: 0.85rem; padding: 8px 14px; }
       .room-pill { font-size: 0.9rem; padding: 7px 14px; }
@@ -472,40 +456,6 @@
 
   </div>
 
-  <!-- Flor Mágica Sundrop Lily -->
-  <div class="magic-flower-corner" id="magicFlower" style="display: none;">
-    <svg width="110" height="120" viewBox="0 0 100 110">
-      <defs>
-        <radialGradient id="sunGold" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#ffffff" />
-          <stop offset="30%" stop-color="#fff066" />
-          <stop offset="70%" stop-color="#ff9900" />
-          <stop offset="100%" stop-color="#cc5500" />
-        </radialGradient>
-        <filter id="glowEffect">
-          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-          <feMerge>
-            <feMergeNode in="coloredBlur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-      </defs>
-      <path d="M 50 105 Q 40 80 50 55" stroke="#235e2e" stroke-width="5" fill="none" />
-      <path d="M 47 85 Q 20 75 28 95 Q 44 90 47 85" fill="#328241" />
-      <path d="M 50 75 Q 75 65 72 85 Q 54 82 50 75" fill="#328241" />
-      
-      <g filter="url(#glowEffect)">
-        <path d="M 50 55 C 20 10 0 32 36 48 Z" fill="url(#sunGold)" />
-        <path d="M 50 55 C 80 10 100 32 64 48 Z" fill="url(#sunGold)" />
-        <path d="M 50 55 C 10 48 10 88 42 62 Z" fill="url(#sunGold)" />
-        <path d="M 50 55 C 90 48 90 88 58 62 Z" fill="url(#sunGold)" />
-        <path d="M 50 55 C 36 0 64 0 50 48 Z" fill="url(#sunGold)" />
-        <circle cx="50" cy="52" r="8" fill="#ffffff" />
-        <circle cx="50" cy="52" r="5" fill="#fff599" />
-      </g>
-    </svg>
-  </div>
-
   <!-- Baú das Cartas -->
   <div class="chest-corner">
     <button class="chest-btn" onclick="toggleVault()">
@@ -537,32 +487,70 @@
 
     // SISTEMA DE TRANSIÇÃO ENTRE TELAS
     function goToScreen2() {
-      playTinkerChime(); // NOVO SOM MÁGICO
+      playTinkerChime();
       document.getElementById('screen1').classList.remove('active');
       document.getElementById('screen1').classList.add('hide');
       
       setTimeout(() => {
         document.getElementById('screen2').classList.add('active');
-        // Exibe a flor na tela 2
-        document.getElementById('magicFlower').style.display = 'block';
       }, 400);
     }
 
     // CONFIGURAÇÃO DAS SALAS E PARTÍCULAS
     let activeRoom = 'tinkerbell';
     const roomPalettes = {
-      tinkerbell: { hueMin: 45, hueMax: 120, speed: 1.8, glow: 'rgba(120, 255, 150, 0.35)', videoFilter: 'brightness(0.9) contrast(1.1) hue-rotate(90deg)', paper: '#f4fdf8' },
-      owens:      { hueMin: 20, hueMax: 40,  speed: 1.2, glow: 'rgba(255, 140, 50, 0.35)', videoFilter: 'brightness(0.8) contrast(1.1) hue-rotate(-15deg) sepia(0.3)', paper: '#fff9f0' },
-      nuvens:     { hueMin: 190, hueMax: 230, speed: 0.8, glow: 'rgba(160, 220, 255, 0.4)', videoFilter: 'brightness(1.1) contrast(1.0) hue-rotate(180deg)', paper: '#f0f8ff' },
-      portal:     { hueMin: 260, hueMax: 310, speed: 2.2, glow: 'rgba(200, 100, 255, 0.4)', videoFilter: 'brightness(0.8) contrast(1.2) saturate(1.5) hue-rotate(240deg)', paper: '#f6f0ff' },
-      livros:     { hueMin: 35, hueMax: 50,  speed: 1.1, glow: 'rgba(255, 210, 120, 0.35)', videoFilter: 'brightness(0.85) contrast(1.0) sepia(0.5)', paper: '#fcf6e8' },
-      tapete:     { hueMin: 210, hueMax: 260, speed: 1.5, glow: 'rgba(100, 150, 255, 0.4)', videoFilter: 'brightness(1.0) contrast(1.1) saturate(1.2) hue-rotate(200deg)', paper: '#f0f5ff' },
-      cavalos:    { hueMin: 80, hueMax: 130, speed: 1.4, glow: 'rgba(150, 220, 100, 0.35)', videoFilter: 'brightness(1.0) contrast(1.0) hue-rotate(70deg)', paper: '#f5fff0' },
-      biblioteca: { hueMin: 25, hueMax: 45,  speed: 1.0, glow: 'rgba(212, 175, 55, 0.4)', videoFilter: 'brightness(0.8) contrast(1.0) sepia(0.6)', paper: '#faf4e6' }
+      tinkerbell: { 
+        hueMin: 45, hueMax: 120, speed: 1.8, 
+        glow: 'rgba(120, 255, 150, 0.35)', 
+        videoFilter: 'brightness(0.9) contrast(1.1) hue-rotate(90deg)', 
+        paperStart: '#f2fbf4', paperEnd: '#ccefd8' 
+      },
+      owens: { 
+        hueMin: 20, hueMax: 40, speed: 1.2, 
+        glow: 'rgba(255, 140, 50, 0.35)', 
+        videoFilter: 'brightness(0.8) contrast(1.1) hue-rotate(-15deg) sepia(0.3)', 
+        paperStart: '#fff7ed', paperEnd: '#fcdcb8' 
+      },
+      nuvens: { 
+        hueMin: 190, hueMax: 230, speed: 0.8, 
+        glow: 'rgba(160, 220, 255, 0.4)', 
+        videoFilter: 'brightness(1.1) contrast(1.0) hue-rotate(180deg)', 
+        paperStart: '#f0f7ff', paperEnd: '#c4e0ff' 
+      },
+      portal: { 
+        hueMin: 260, hueMax: 310, speed: 2.2, 
+        glow: 'rgba(200, 100, 255, 0.4)', 
+        videoFilter: 'brightness(0.8) contrast(1.2) saturate(1.5) hue-rotate(240deg)', 
+        paperStart: '#f7f0ff', paperEnd: '#dfc4ff' 
+      },
+      livros: { 
+        hueMin: 35, hueMax: 50, speed: 1.1, 
+        glow: 'rgba(255, 210, 120, 0.35)', 
+        videoFilter: 'brightness(0.85) contrast(1.0) sepia(0.5)', 
+        paperStart: '#fcf5e8', paperEnd: '#e2cd9d' 
+      },
+      tapete: { 
+        hueMin: 210, hueMax: 260, speed: 1.5, 
+        glow: 'rgba(100, 150, 255, 0.4)', 
+        videoFilter: 'brightness(1.0) contrast(1.1) saturate(1.2) hue-rotate(200deg)', 
+        paperStart: '#f0f4ff', paperEnd: '#b8cfff' 
+      },
+      cavalos: { 
+        hueMin: 80, hueMax: 130, speed: 1.4, 
+        glow: 'rgba(150, 220, 100, 0.35)', 
+        videoFilter: 'brightness(1.0) contrast(1.0) hue-rotate(70deg)', 
+        paperStart: '#f4fbf0', paperEnd: '#cbebc0' 
+      },
+      biblioteca: { 
+        hueMin: 25, hueMax: 45, speed: 1.0, 
+        glow: 'rgba(212, 175, 55, 0.4)', 
+        videoFilter: 'brightness(0.8) contrast(1.0) sepia(0.6)', 
+        paperStart: '#fdf7ea', paperEnd: '#e6cfab' 
+      }
     };
 
     function selectRoom(roomKey, element) {
-      playTinkerChime(); // SOM MÁGICO
+      playTinkerChime();
       activeRoom = roomKey;
 
       // Atualiza estado ativo dos botões
@@ -571,13 +559,14 @@
 
       const palette = roomPalettes[roomKey];
       
-      // APLICAÇÃO DO TEMA DA SALA
+      // APLICAÇÃO DO TEMA DA SALA E MUDANÇA NÍTIDA DO PAPEL
       document.getElementById('vignette').style.background = 
         `radial-gradient(circle at center, transparent 35%, ${palette.glow} 75%, rgba(2, 4, 7, 0.9) 100%)`;
       document.getElementById('bgVideo').style.filter = palette.videoFilter;
       
-      // Altera cor do papel
-      document.documentElement.style.setProperty('--current-paper', palette.paper);
+      // Atualiza as variáveis CSS do papel do pergaminho
+      document.documentElement.style.setProperty('--paper-start', palette.paperStart);
+      document.documentElement.style.setProperty('--paper-end', palette.paperEnd);
 
       // Explosão de brilhos da sala
       createMagicBurst(window.innerWidth / 2, window.innerHeight / 3);
@@ -646,20 +635,19 @@
     }
     animateParticles();
 
-    // ÁUDIO MÁGICO (CRIANDO SOM DA SININHO DINAMICAMENTE)
+    // ÁUDIO MÁGICO (SOM DA SININHO)
     function playTinkerChime() {
       try {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         const audio = new AudioCtx();
-        // Frequências mais altas e sequence rápida para Tink: C6, E6, G6, C7, E7
         const freqs = [1046.50, 1318.51, 1567.98, 2093.00, 2637.02];
         freqs.forEach((f, i) => {
           const osc = audio.createOscillator();
           const gain = audio.createGain();
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(f, audio.currentTime + i * 0.05); // Muito rápido
-          gain.gain.setValueAtTime(0.08, audio.currentTime + i * 0.05); // Volume baixo
-          gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + i * 0.05 + 0.3); // Decay rápido
+          osc.frequency.setValueAtTime(f, audio.currentTime + i * 0.05);
+          gain.gain.setValueAtTime(0.08, audio.currentTime + i * 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + i * 0.05 + 0.3);
           osc.connect(gain);
           gain.connect(audio.destination);
           osc.start(audio.currentTime + i * 0.05);
@@ -681,7 +669,7 @@
       const card = document.getElementById('parchmentCard');
       const rect = card.getBoundingClientRect();
       
-      playTinkerChime(); // SOM MÁGICO
+      playTinkerChime();
       createMagicBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
 
       card.classList.add('sending');
@@ -741,6 +729,8 @@
       vault.style.display = vault.style.display === 'flex' ? 'none' : 'flex';
     }
 
+    // Inicializa as cores da primeira sala (Tinker Bell)
+    selectRoom('tinkerbell', document.querySelector('.room-pill.active'));
     updateVault();
   </script>
 </body>
