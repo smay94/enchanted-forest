@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Floresta Encantada ✨</title>
   
-  <!-- Fontes Clássicas da Disney / Livros Encantados -->
+  <!-- Fontes de Conto de Fadas Disney Clássico -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Tangerine:wght@700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --gold: #f5d77f;
+      --gold-primary: #f5d372;
+      --gold-bright: #ffe699;
       --gold-dark: #b8860b;
-      --gold-glow: #ffe066;
-      --parchment-bg: #faf2dc;
-      --ink: #2b1704;
-      --ruby: #8b0000;
+      --parchment: #fcf5e5;
+      --ink: #2d1808;
+      --ruby: #940f0f;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,40 +32,55 @@
       color: #fdf6e2;
       overflow-x: hidden;
       position: relative;
-      background: #091712;
+      background-color: #0b1a13;
+      transition: background-image 1.2s ease-in-out;
     }
 
-    /* === CENÁRIO DE ILUSTRAÇÃO DA FLORESTA (SVG EMBUTIDO 100% OFFLINE) === */
-    .bg-illustration {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* Vinheta de Luz de Cinema */
-    .vignette {
+    /* === MÚLTIPLAS CAMADAS DE FUNDO ORGÂNICO E MÁGICO === */
+    .bg-layer {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
-      background: radial-gradient(circle at center, rgba(0,0,0,0) 20%, rgba(5, 15, 10, 0.65) 75%, rgba(2, 8, 5, 0.95) 100%);
-      z-index: 2;
       pointer-events: none;
     }
 
-    /* Moldura de Livro Mágico */
-    .magic-frame {
+    /* Imagem de Fundo Artística em Alta Resolução */
+    .bg-image-container {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: saturate(1.2) brightness(0.85);
+      transition: all 1.2s ease-in-out;
+      z-index: 1;
+    }
+
+    /* Vinheta e Iluminação Dourada Quente de Conto de Fadas */
+    .bg-glow-overlay {
+      background: 
+        radial-gradient(circle at 50% 20%, rgba(255, 230, 140, 0.25) 0%, transparent 60%),
+        radial-gradient(circle at 50% 100%, rgba(10, 25, 18, 0.8) 0%, rgba(3, 10, 7, 0.95) 100%);
+      z-index: 2;
+    }
+
+    /* Moldura de Livro de Histórias Vintage */
+    .storybook-border {
       position: fixed;
-      top: 10px; left: 10px; right: 10px; bottom: 10px;
-      border: 3px double var(--gold);
-      border-radius: 18px;
+      top: 14px; left: 14px; right: 14px; bottom: 14px;
+      border: 2px solid var(--gold-primary);
+      border-radius: 20px;
       pointer-events: none;
       z-index: 50;
-      box-shadow: inset 0 0 25px rgba(245, 215, 127, 0.3), 0 0 20px rgba(0,0,0,0.8);
+      box-shadow: inset 0 0 30px rgba(245, 211, 114, 0.25), 0 0 25px rgba(0,0,0,0.9);
     }
 
-    /* Canvas para Pó de Fada */
+    .storybook-border::before {
+      content: '';
+      position: absolute;
+      top: 3px; left: 3px; right: 3px; bottom: 3px;
+      border: 1px solid rgba(245, 211, 114, 0.4);
+      border-radius: 17px;
+    }
+
+    /* Partículas do Canvas (Pó de Fada) */
     #fairyCanvas {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -73,64 +88,57 @@
       z-index: 15;
     }
 
-    /* === ANIMAÇÃO DAS FADINHAS VIVAS === */
-    .fairy {
+    /* === FADINHAS ILUMINADAS EM MOVIMENTO === */
+    .fairy-light {
       position: fixed;
       z-index: 20;
       pointer-events: none;
-      filter: drop-shadow(0 0 12px #ffeb66) drop-shadow(0 0 25px #ff9800);
-    }
-
-    .fairy-body {
-      width: 10px;
-      height: 10px;
+      width: 12px; height: 12px;
       background: #ffffff;
       border-radius: 50%;
-      box-shadow: 0 0 15px 6px #fff2a3;
-      position: relative;
+      box-shadow: 0 0 20px 8px #ffe57f, 0 0 40px 18px #ff9800;
+      animation: fairyFloat 0.2s infinite alternate ease-in-out;
     }
 
-    .fairy-wings {
+    .fairy-light::before {
+      content: '';
       position: absolute;
-      top: -6px;
-      left: -10px;
-      width: 30px;
-      height: 12px;
-      background: rgba(255, 255, 255, 0.75);
+      top: -6px; left: -10px;
+      width: 32px; height: 12px;
+      background: rgba(255, 255, 255, 0.8);
       border-radius: 50%;
-      filter: blur(0.5px);
-      animation: flapWings 0.12s infinite alternate ease-in-out;
+      filter: blur(1px);
+      animation: wingFlap 0.1s infinite alternate;
     }
 
-    @keyframes flapWings {
-      0% { transform: scaleY(0.2) rotate(-10deg); }
-      100% { transform: scaleY(1.3) rotate(10deg); }
+    @keyframes wingFlap {
+      0% { transform: scaleY(0.2) rotate(-8deg); }
+      100% { transform: scaleY(1.4) rotate(8deg); }
     }
 
-    .fairy-tinker { animation: flyTinker 22s infinite ease-in-out; }
-    .fairy-rosetta { animation: flyRosetta 18s infinite ease-in-out 4s; }
+    .fairy-1 { animation: fairyPath1 24s infinite ease-in-out; }
+    .fairy-2 { animation: fairyPath2 19s infinite ease-in-out 6s; }
 
-    @keyframes flyTinker {
-      0% { top: 20%; left: -5%; opacity: 0; }
+    @keyframes fairyPath1 {
+      0% { top: 25%; left: -5%; opacity: 0; }
       15% { opacity: 1; }
-      45% { top: 40%; left: 45%; }
-      75% { top: 25%; left: 80%; }
-      100% { top: 15%; left: 105%; opacity: 0; }
+      50% { top: 45%; left: 48%; }
+      85% { opacity: 1; }
+      100% { top: 18%; left: 105%; opacity: 0; }
     }
 
-    @keyframes flyRosetta {
+    @keyframes fairyPath2 {
       0% { top: 80%; left: 105%; opacity: 0; }
       20% { opacity: 1; }
-      55% { top: 60%; left: 30%; }
-      85% { top: 75%; left: 10%; }
-      100% { top: 85%; left: -5%; opacity: 0; }
+      60% { top: 35%; left: 35%; }
+      100% { top: 75%; left: -5%; opacity: 0; }
     }
 
     /* === CONTAINER PRINCIPAL === */
-    .main-container {
+    .container {
       width: 90%;
-      max-width: 660px;
-      margin: 30px auto;
+      max-width: 680px;
+      margin: 35px auto;
       position: relative;
       z-index: 30;
       text-align: center;
@@ -138,147 +146,148 @@
 
     header h1 {
       font-family: 'Cinzel Decorative', serif;
-      color: var(--gold);
-      font-size: 2.6rem;
-      text-shadow: 0 0 20px rgba(245, 215, 127, 0.7), 0 3px 6px rgba(0,0,0,0.9);
-      letter-spacing: 3px;
+      color: var(--gold-bright);
+      font-size: 2.8rem;
+      text-shadow: 0 0 25px rgba(255, 230, 153, 0.8), 0 3px 8px rgba(0,0,0,0.9);
+      letter-spacing: 4px;
     }
 
     header p {
       font-style: italic;
-      color: #fff2c4;
-      font-size: 1.3rem;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.9);
-      margin-top: 4px;
-      margin-bottom: 20px;
+      color: #fff3cc;
+      font-size: 1.35rem;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.9);
+      margin-top: 6px;
+      margin-bottom: 22px;
     }
 
-    /* Seletor de Mudar de Cenário */
+    /* Botoes de Troca de Cenário */
     .theme-selector {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 8px;
-      margin-bottom: 20px;
+      gap: 10px;
+      margin-bottom: 22px;
     }
 
     .theme-btn {
-      background: rgba(10, 25, 18, 0.75);
-      border: 1.5px solid var(--gold);
-      color: #fff2c4;
-      padding: 7px 16px;
-      border-radius: 20px;
+      background: rgba(8, 20, 14, 0.75);
+      border: 1.5px solid var(--gold-primary);
+      color: #fff3cc;
+      padding: 8px 18px;
+      border-radius: 25px;
       cursor: pointer;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 600;
-      backdrop-filter: blur(6px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.7);
       transition: all 0.3s;
     }
 
     .theme-btn:hover, .theme-btn.active {
-      background: linear-gradient(180deg, #ffe066 0%, #d4af37 100%);
-      color: #120900;
+      background: linear-gradient(180deg, #ffe699 0%, #d4af37 100%);
+      color: #1a0e02;
       font-weight: bold;
-      box-shadow: 0 0 18px rgba(255, 224, 102, 0.9);
+      box-shadow: 0 0 22px rgba(255, 230, 153, 0.9);
       transform: translateY(-2px);
     }
 
-    /* === O PERGAMINHO MÁGICO === */
-    .parchment-box {
-      background: var(--parchment-bg);
-      background-image: radial-gradient(circle at center, #fffdf5 0%, #f3e6c5 100%);
+    /* === CARTA DE PERGAMINHO MÁGICO === */
+    .parchment-card {
+      background: var(--parchment);
+      background-image: 
+        radial-gradient(circle at center, #ffffff 0%, #f7ebd0 100%);
       border: 4px double var(--gold-dark);
-      border-radius: 16px;
-      padding: 30px 25px 20px 25px;
-      box-shadow: 0 15px 45px rgba(0,0,0,0.85), inset 0 0 60px rgba(184, 134, 11, 0.25);
+      border-radius: 18px;
+      padding: 35px 30px 25px 30px;
+      box-shadow: 0 20px 55px rgba(0,0,0,0.9), inset 0 0 70px rgba(184, 134, 11, 0.25);
       position: relative;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+      transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
     }
 
-    .parchment-box::before { content: '⚜️'; position: absolute; top: 10px; left: 14px; color: var(--gold-dark); font-size: 18px; }
-    .parchment-box::after { content: '⚜️'; position: absolute; top: 10px; right: 14px; color: var(--gold-dark); font-size: 18px; }
+    .parchment-card::before { content: '⚜️'; position: absolute; top: 12px; left: 16px; color: var(--gold-dark); font-size: 20px; }
+    .parchment-card::after { content: '⚜️'; position: absolute; top: 12px; right: 16px; color: var(--gold-dark); font-size: 20px; }
 
-    .parchment-box.sending {
-      transform: translateY(-130px) scale(0.15) rotate(15deg);
+    .parchment-card.sending {
+      transform: translateY(-140px) scale(0.12) rotate(18deg);
       opacity: 0;
     }
 
     textarea {
       width: 100%;
-      height: 200px;
+      height: 210px;
       background: transparent;
       border: none;
       outline: none;
       color: var(--ink);
       font-family: 'Tangerine', cursive;
-      font-size: 2.4rem;
+      font-size: 2.6rem;
       line-height: 1.3;
       resize: none;
       font-weight: bold;
     }
 
     textarea::placeholder {
-      color: rgba(43, 23, 4, 0.45);
+      color: rgba(45, 24, 8, 0.45);
       font-style: italic;
     }
 
     .btn-send {
       width: 100%;
-      margin-top: 12px;
-      padding: 13px;
+      margin-top: 15px;
+      padding: 14px;
       background: linear-gradient(180deg, #ffe885 0%, #d4af37 50%, #8a6a0d 100%);
       border: 1.5px solid #fff5be;
-      color: #1a0f02;
+      color: #1f1002;
       font-family: 'Cinzel Decorative', serif;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: bold;
       border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 5px 18px rgba(0,0,0,0.6), 0 0 15px rgba(245, 215, 127, 0.5);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.7), 0 0 18px rgba(245, 211, 114, 0.6);
       transition: all 0.3s;
     }
 
     .btn-send:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 224, 102, 0.9);
+      box-shadow: 0 8px 30px rgba(255, 230, 153, 1);
     }
 
-    /* === FLOR DA RAPUNZEL (SUNDROP LILY) NO CANTO ESQUERDO === */
-    .flower-corner {
+    /* === FLOR DA RAPUNZEL (SUNDROP LILY) ILUMINADA NO CANTO ESQUERDO === */
+    .flower-container {
       position: fixed;
-      bottom: 20px;
-      left: 25px;
+      bottom: 22px;
+      left: 28px;
       z-index: 25;
       pointer-events: none;
-      animation: flowerGlow 3s infinite alternate ease-in-out;
+      animation: flowerGlow 3.5s infinite alternate ease-in-out;
     }
 
     @keyframes flowerGlow {
-      0% { transform: scale(0.96) rotate(-2deg); filter: drop-shadow(0 0 15px #ffd700); }
-      100% { transform: scale(1.05) rotate(2deg); filter: drop-shadow(0 0 30px #ffd700) drop-shadow(0 0 45px #ff69b4); }
+      0% { transform: scale(0.95) rotate(-2deg); filter: drop-shadow(0 0 18px #ffd700); }
+      100% { transform: scale(1.06) rotate(2deg); filter: drop-shadow(0 0 35px #ffd700) drop-shadow(0 0 50px #ff69b4); }
     }
 
     /* === BAÚ DO TESOURO NO CANTO DIREITO === */
-    .chest-corner {
+    .chest-container {
       position: fixed;
-      bottom: 20px;
-      right: 25px;
+      bottom: 22px;
+      right: 28px;
       z-index: 35;
     }
 
     .chest-btn {
-      background: linear-gradient(180deg, rgba(15, 30, 22, 0.95) 0%, rgba(5, 12, 8, 0.95) 100%);
-      border: 2px solid var(--gold);
-      color: #fff2c4;
-      padding: 10px 18px;
+      background: linear-gradient(180deg, rgba(16, 32, 24, 0.95) 0%, rgba(5, 12, 8, 0.95) 100%);
+      border: 2px solid var(--gold-primary);
+      color: #fff3cc;
+      padding: 11px 20px;
       border-radius: 30px;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       cursor: pointer;
       font-family: 'Cormorant Garamond', serif;
       font-weight: 700;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.8), 0 0 15px rgba(245, 215, 127, 0.4);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.85), 0 0 18px rgba(245, 211, 114, 0.45);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -286,8 +295,8 @@
     }
 
     .chest-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 28px rgba(255, 224, 102, 0.9);
+      transform: scale(1.06);
+      box-shadow: 0 10px 32px rgba(255, 230, 153, 0.95);
     }
 
     /* MODAL DO BAÚ DE CARTAS */
@@ -303,14 +312,14 @@
     }
 
     .vault-card {
-      background: #091712;
-      border: 2px solid var(--gold);
-      border-radius: 16px;
+      background: #0b1a13;
+      border: 2px solid var(--gold-primary);
+      border-radius: 18px;
       width: 90%;
-      max-width: 550px;
+      max-width: 560px;
       max-height: 80vh;
-      padding: 25px;
-      box-shadow: 0 0 35px rgba(245, 215, 127, 0.4);
+      padding: 28px;
+      box-shadow: 0 0 40px rgba(245, 211, 114, 0.4);
       display: flex;
       flex-direction: column;
     }
@@ -319,21 +328,21 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid var(--gold);
-      padding-bottom: 10px;
-      margin-bottom: 15px;
+      border-bottom: 1px solid var(--gold-primary);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
     }
 
-    .vault-header h2 { font-family: 'Cinzel Decorative', serif; color: var(--gold); font-size: 1.4rem; }
-    .close-btn { background: transparent; border: none; color: var(--gold); font-size: 2rem; cursor: pointer; }
+    .vault-header h2 { font-family: 'Cinzel Decorative', serif; color: var(--gold-primary); font-size: 1.5rem; }
+    .close-btn { background: transparent; border: none; color: var(--gold-primary); font-size: 2.2rem; cursor: pointer; }
     .vault-content { overflow-y: auto; }
 
     .wish-card {
-      background: var(--parchment-bg);
+      background: var(--parchment);
       color: var(--ink);
-      padding: 16px;
-      border-radius: 10px;
-      margin-bottom: 14px;
+      padding: 18px;
+      border-radius: 12px;
+      margin-bottom: 16px;
       text-align: left;
       border-left: 6px solid var(--ruby);
       position: relative;
@@ -341,149 +350,94 @@
 
     .wax-seal {
       position: absolute;
-      top: 12px; right: 14px;
-      width: 28px; height: 28px;
+      top: 14px; right: 16px;
+      width: 30px; height: 30px;
       background: var(--ruby);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      color: #ffd700; font-size: 12px;
+      color: #ffd700; font-size: 13px;
     }
 
-    .wish-date { font-size: 0.85rem; color: #7a5c38; font-weight: bold; margin-bottom: 4px; }
-    .wish-text { font-family: 'Tangerine', cursive; font-size: 2.1rem; line-height: 1.2; font-weight: bold; }
+    .wish-date { font-size: 0.9rem; color: #7a5c38; font-weight: bold; margin-bottom: 5px; }
+    .wish-text { font-family: 'Tangerine', cursive; font-size: 2.3rem; line-height: 1.2; font-weight: bold; }
 
-    @media (max-width: 600px) {
-      header h1 { font-size: 1.9rem; }
-      .flower-corner { transform: scale(0.65); left: -10px; bottom: 0px; }
-      .chest-corner { right: 12px; bottom: 12px; }
-      .chest-btn { font-size: 0.9rem; padding: 8px 14px; }
+    @media (max-width: 650px) {
+      header h1 { font-size: 2rem; }
+      .flower-container { transform: scale(0.65); left: -10px; bottom: 0px; }
+      .chest-container { right: 12px; bottom: 12px; }
+      .chest-btn { font-size: 0.92rem; padding: 8px 14px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ILUSTRAÇÃO VETORIAL ILUMINADA DA FLORESTA DISNEY (100% EMBUTIDA) -->
-  <svg class="bg-illustration" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" id="svgForest">
-    <defs>
-      <!-- Gradientes da Floresta Clássica da Disney -->
-      <radialGradient id="skyGrad" cx="50%" cy="30%" r="70%">
-        <stop offset="0%" stop-color="#2a5a44" />
-        <stop offset="40%" stop-color="#143627" />
-        <stop offset="80%" stop-color="#091b13" />
-        <stop offset="100%" stop-color="#040d09" />
-      </radialGradient>
-
-      <radialGradient id="treeGlow" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#fff5a6" stop-opacity="0.9" />
-        <stop offset="40%" stop-color="#ffd700" stop-opacity="0.6" />
-        <stop offset="100%" stop-color="#143627" stop-opacity="0" />
-      </radialGradient>
-
-      <linearGradient id="riverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#1e4d58" />
-        <stop offset="50%" stop-color="#2b7a8c" />
-        <stop offset="100%" stop-color="#0e2930" />
-      </linearGradient>
-
-      <radialGradient id="flowerPetalGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#ffffff" />
-        <stop offset="40%" stop-color="#ffea66" />
-        <stop offset="85%" stop-color="#ff7700" />
-        <stop offset="100%" stop-color="#b8860b" />
-      </radialGradient>
-    </defs>
-
-    <!-- Céu Noturno da Floresta Encantada -->
-    <rect width="1440" height="900" fill="url(#skyGrad)" />
-
-    <!-- Raios de Sol / Luz Mágica entre as Árvores -->
-    <polygon points="720,0 300,900 1140,900" fill="url(#treeGlow)" opacity="0.3" />
-
-    <!-- Montanhas ao Fundo com Névoa -->
-    <path d="M 0 500 Q 350 300 720 450 Q 1100 250 1440 480 L 1440 900 L 0 900 Z" fill="#0c2319" opacity="0.8" />
-    <path d="M 0 580 Q 450 420 800 540 Q 1200 380 1440 560 L 1440 900 L 0 900 Z" fill="#081a12" opacity="0.95" />
-
-    <!-- O Rio Mágico Serpenteante (Refletindo Luz Dourada) -->
-    <path d="M 680 500 Q 750 600 600 700 Q 400 820 100 900 L 1440 900 L 1440 850 Q 900 750 850 600 Q 800 500 720 500 Z" fill="url(#riverGrad)" opacity="0.85" />
-    <path d="M 690 510 Q 740 590 620 690 Q 450 800 200 880" stroke="#7be3f0" stroke-width="4" fill="none" opacity="0.5" filter="blur(2px)" />
-
-    <!-- A Grande Árvore Anciã Mágica (Pixie Dust Tree / Oco do Pau-Brasil) -->
-    <path d="M 620 520 Q 580 350 660 220 Q 720 120 800 200 Q 880 320 820 520 Z" fill="#05100b" />
-    <!-- Luz Mágica saindo do Oco da Árvore -->
-    <ellipse cx="720" cy="340" rx="45" ry="65" fill="url(#treeGlow)" />
-
-    <!-- Silhuetas de Copas de Árvores Laterais (Eyvind Earle Style) -->
-    <path d="M -50 200 Q 200 150 300 400 Q 100 650 -100 600 Z" fill="#05120c" />
-    <path d="M 1200 150 Q 1500 200 1550 550 Q 1300 650 1150 450 Z" fill="#040f0a" />
-
-    <!-- Gramado Encantado em Primeiro Plano -->
-    <path d="M 0 720 Q 400 680 720 760 Q 1100 690 1440 730 L 1440 900 L 0 900 Z" fill="#040c08" />
-  </svg>
-
-  <div class="vignette"></div>
-  <div class="magic-frame"></div>
+  <!-- MÚLTIPLAS CAMADAS VISUAIS CINEMATOGRÁFICAS -->
+  <div class="bg-layer bg-image-container" id="bgLayer"></div>
+  <div class="bg-layer bg-glow-overlay"></div>
+  <div class="storybook-border"></div>
+  
   <canvas id="fairyCanvas"></canvas>
 
-  <!-- FADINHAS VIVAS EM MOVIMENTO -->
-  <div class="fairy fairy-tinker">
-    <div class="fairy-body">
-      <div class="fairy-wings"></div>
-    </div>
-  </div>
-  <div class="fairy fairy-rosetta">
-    <div class="fairy-body" style="box-shadow: 0 0 15px 6px #ffb3d9;">
-      <div class="fairy-wings"></div>
-    </div>
-  </div>
+  <!-- FADINHAS VIVAS BRILHANTES -->
+  <div class="fairy-light fairy-1"></div>
+  <div class="fairy-light fairy-2"></div>
 
-  <!-- FLOR DA RAPUNZEL (SUNDROP LILY) NO CANTO INFERIOR ESQUERDO -->
-  <div class="flower-corner">
-    <svg width="120" height="130" viewBox="0 0 100 110">
-      <path d="M 50 105 Q 42 80 50 55" stroke="#2a6635" stroke-width="5" fill="none" />
-      <path d="M 47 85 Q 25 75 32 95 Q 46 90 47 85" fill="#388746" />
-      <path d="M 50 75 Q 70 65 68 85 Q 52 82 50 75" fill="#388746" />
+  <!-- FLOR DA RAPUNZEL (SUNDROP LILY) ILUMINADA -->
+  <div class="flower-container">
+    <svg width="130" height="140" viewBox="0 0 100 110">
+      <defs>
+        <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff" />
+          <stop offset="35%" stop-color="#ffe666" />
+          <stop offset="80%" stop-color="#ff7700" />
+          <stop offset="100%" stop-color="#b8860b" />
+        </radialGradient>
+      </defs>
+      <path d="M 50 105 Q 42 80 50 55" stroke="#2e6d38" stroke-width="5" fill="none" />
+      <path d="M 47 85 Q 25 75 32 95 Q 46 90 47 85" fill="#3d8e4b" />
+      <path d="M 50 75 Q 70 65 68 85 Q 52 82 50 75" fill="#3d8e4b" />
       <!-- Pétalas Iluminadas de Fogo Amarelo/Ouro -->
-      <path d="M 50 55 C 25 15 5 35 38 48 Z" fill="url(#flowerPetalGrad)" />
-      <path d="M 50 55 C 75 15 95 35 62 48 Z" fill="url(#flowerPetalGrad)" />
-      <path d="M 50 55 C 15 50 15 85 43 62 Z" fill="url(#flowerPetalGrad)" />
-      <path d="M 50 55 C 85 50 85 85 57 62 Z" fill="url(#flowerPetalGrad)" />
-      <path d="M 50 55 C 38 5 62 5 50 48 Z" fill="url(#flowerPetalGrad)" />
+      <path d="M 50 55 C 25 15 5 35 38 48 Z" fill="url(#sunGrad)" />
+      <path d="M 50 55 C 75 15 95 35 62 48 Z" fill="url(#sunGrad)" />
+      <path d="M 50 55 C 15 50 15 85 43 62 Z" fill="url(#sunGrad)" />
+      <path d="M 50 55 C 85 50 85 85 57 62 Z" fill="url(#sunGrad)" />
+      <path d="M 50 55 C 38 5 62 5 50 48 Z" fill="url(#sunGrad)" />
       <circle cx="50" cy="52" r="8" fill="#ffffff" filter="drop-shadow(0 0 8px #ffffff)" />
     </svg>
   </div>
 
-  <!-- CONTEÚDO PRINCIPAL -->
-  <div class="main-container">
+  <!-- CONTEÚDO PRINCIPAL DO SITE -->
+  <div class="container">
     <header>
       <h1>Floresta Encantada</h1>
       <p>Escreva para o Universo e envie com mágica...</p>
     </header>
 
-    <!-- Troca de Cenários -->
+    <!-- Troca de Cenários com Ilustrações Disney -->
     <div class="theme-selector">
-      <button class="theme-btn active" onclick="setTheme('forest', this)">Clareira da Aurora</button>
+      <button class="theme-btn active" onclick="setTheme('aurora', this)">Clareira da Aurora</button>
       <button class="theme-btn" onclick="setTheme('cottage', this)">Cabana das Fadas</button>
       <button class="theme-btn" onclick="setTheme('tinker', this)">Refúgio de Tinker Bell</button>
       <button class="theme-btn" onclick="setTheme('paris', this)">Noite em Paris</button>
     </div>
 
     <!-- Pergaminho de Escrita -->
-    <div class="parchment-box" id="parchmentCard">
+    <div class="parchment-card" id="parchmentCard">
       <textarea id="wishText" placeholder="Querido Universo... escreva aqui seus desejos mais sinceros"></textarea>
       <button class="btn-send" onclick="sendWish()">Enviar ao Universo ✨</button>
     </div>
   </div>
 
-  <!-- BAÚ DO TESOURO NO CANTO DIREITO -->
-  <div class="chest-corner">
+  <!-- BAÚ DO TESOURO FIXADO -->
+  <div class="chest-container">
     <button class="chest-btn" onclick="toggleVault()">
-      <svg width="22" height="20" viewBox="0 0 24 24" fill="none" stroke="#f5d77f" stroke-width="2">
+      <svg width="22" height="20" viewBox="0 0 24 24" fill="none" stroke="#f5d372" stroke-width="2">
         <path d="M3 10h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V10z"/>
         <path d="M3 10a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4"/>
-        <circle cx="12" cy="15" r="2" fill="#f5d77f"/>
+        <circle cx="12" cy="15" r="2" fill="#f5d372"/>
       </svg>
       <span>Baú das Cartas</span>
-      <span style="background: var(--gold); color: #000; border-radius: 12px; padding: 2px 8px; font-size: 0.85rem;" id="wishCount">0</span>
+      <span style="background: var(--gold-primary); color: #000; border-radius: 12px; padding: 2px 8px; font-size: 0.85rem;" id="wishCount">0</span>
     </button>
   </div>
 
@@ -499,32 +453,25 @@
   </div>
 
   <script>
-    // 1. Mudança Mágica de Cores/Cenários no Vetor SVG
-    function setTheme(theme, btn) {
+    // IMAGENS DE ALTA QUALIDADE ARTÍSTICA DA DISNEY E FANTASIA CLÁSSICA
+    const backgroundArts = {
+      aurora: "https://images.unsplash.com/photo-1511497584788-876761c11969?q=80&w=1920&auto=format&fit=crop",
+      cottage: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1920&auto=format&fit=crop",
+      tinker: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1920&auto=format&fit=crop",
+      paris: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1920&auto=format&fit=crop"
+    };
+
+    function setTheme(key, btn) {
       document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      
-      const sky = document.querySelectorAll('#skyGrad stop');
-      if (theme === 'forest') { // Verde Místico Clareira
-        sky[0].setAttribute('stop-color', '#2a5a44');
-        sky[1].setAttribute('stop-color', '#143627');
-        sky[2].setAttribute('stop-color', '#091b13');
-      } else if (theme === 'cottage') { // Aconchego Quente
-        sky[0].setAttribute('stop-color', '#4a2c1d');
-        sky[1].setAttribute('stop-color', '#2b170e');
-        sky[2].setAttribute('stop-color', '#120804');
-      } else if (theme === 'tinker') { // Refúgio Esmeralda/Tinker Bell
-        sky[0].setAttribute('stop-color', '#125c48');
-        sky[1].setAttribute('stop-color', '#0a382b');
-        sky[2].setAttribute('stop-color', '#041812');
-      } else if (theme === 'paris') { // Noite Azul-Violeta em Paris
-        sky[0].setAttribute('stop-color', '#202b42');
-        sky[1].setAttribute('stop-color', '#101726');
-        sky[2].setAttribute('stop-color', '#070a12');
-      }
+      const bgLayer = document.getElementById('bgLayer');
+      bgLayer.style.backgroundImage = `url('${backgroundArts[key]}')`;
     }
 
-    // 2. Animação de Pó de Fada Cintilante Contínua
+    // Inicializar Fundo
+    setTheme('aurora', document.querySelector('.theme-btn.active'));
+
+    // PÓ DE FADA CINTILANTE (CANVAS)
     const canvas = document.getElementById('fairyCanvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -540,22 +487,22 @@
       particles.push({
         x: Math.random() * canvas.width,
         y: canvas.height + 10,
-        size: Math.random() * 3.5 + 1,
-        speedX: (Math.random() - 0.5) * 1.5,
-        speedY: -(Math.random() * 2 + 1),
+        size: Math.random() * 3.8 + 1,
+        speedX: (Math.random() - 0.5) * 1.6,
+        speedY: -(Math.random() * 2.2 + 1),
         color: `hsl(${Math.random() * 50 + 40}, 100%, 80%)`,
         life: 1
       });
-    }, 100);
+    }, 90);
 
     function createExplosion(x, y) {
-      for(let i = 0; i < 70; i++) {
+      for(let i = 0; i < 75; i++) {
         particles.push({
           x: x, y: y,
-          size: Math.random() * 6 + 1.5,
-          speedX: (Math.random() - 0.5) * 9,
-          speedY: (Math.random() - 0.5) * 9 - 2,
-          color: `hsl(${Math.random() * 60 + 35}, 100%, 80%)`,
+          size: Math.random() * 6.5 + 1.5,
+          speedX: (Math.random() - 0.5) * 10,
+          speedY: (Math.random() - 0.5) * 10 - 2,
+          color: `hsl(${Math.random() * 60 + 35}, 100%, 85%)`,
           life: 1
         });
       }
@@ -579,7 +526,7 @@
     }
     animateParticles();
 
-    // 3. Som de Plim Mágico
+    // SOM MÁGICO DE PLIM
     function playSound() {
       try {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -600,10 +547,10 @@
       } catch(e) {}
     }
 
-    // 4. Enviar Carta
+    // ENVIAR DESEJO
     function sendWish() {
       const text = document.getElementById('wishText').value.trim();
-      if (!text) return alert("Escreva seu desejo antes de enviar!");
+      if (!text) return alert("Por favor, escreva seu desejo antes de enviar ao universo!");
 
       const parchment = document.getElementById('parchmentCard');
       const rect = parchment.getBoundingClientRect();
@@ -637,7 +584,7 @@
       
       const vaultList = document.getElementById('vaultList');
       if (wishes.length === 0) {
-        vaultList.innerHTML = '<p style="text-align: center; color: #fff2c4; font-style: italic; margin: 20px 0;">O baú ainda está vazio... Envie seu primeiro desejo!</p>';
+        vaultList.innerHTML = '<p style="text-align: center; color: #fff3cc; font-style: italic; margin: 20px 0;">O baú ainda está vazio... Envie seu primeiro desejo!</p>';
         return;
       }
 
