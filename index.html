@@ -109,10 +109,12 @@
       pointer-events: none;
     }
 
+    /* TÍTULO SEM QUADRADO */
     .title-glow h1 {
       font-family: 'Cinzel Decorative', serif;
       font-size: 3.2rem;
       color: var(--gold-bright);
+      /* Brilho externo intenso para contraste */
       text-shadow: 0 0 35px rgba(255, 232, 163, 1), 0 3px 6px rgba(0,0,0,0.95);
       letter-spacing: 5px;
       margin-bottom: 12px;
@@ -218,12 +220,13 @@
     }
 
     .parchment-card {
+      /* Estilo dinâmico definido via JS */
       border: 4px double var(--gold-dark);
       border-radius: 16px;
       padding: 30px 26px 20px 26px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.85), inset 0 0 60px rgba(140, 109, 31, 0.22);
       position: relative;
-      transition: background 0.6s ease, transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+      transition: background 0.8s ease, transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
     }
 
     .parchment-card::before { content: '⚜️'; position: absolute; top: 12px; left: 16px; color: var(--gold-dark); font-size: 16px; }
@@ -491,56 +494,56 @@
       }, 400);
     }
 
-    // CONFIGURAÇÃO DAS SALAS E PAPÉIS
+    // CONFIGURAÇÃO DAS SALAS E TEMAS
     let activeRoom = 'tinkerbell';
     const roomPalettes = {
       tinkerbell: { 
         hueMin: 45, hueMax: 120, speed: 1.8, 
         glow: 'rgba(120, 255, 150, 0.35)', 
         videoFilter: 'brightness(0.9) contrast(1.1) hue-rotate(90deg)', 
-        paperBg: 'radial-gradient(circle at center, #f2fbf4 0%, #a2e8bc 100%)' 
+        paperBg: 'radial-gradient(circle at center, #f2fbf4 0%, #ccefd8 100%)' 
       },
       owens: { 
         hueMin: 20, hueMax: 40, speed: 1.2, 
         glow: 'rgba(255, 140, 50, 0.35)', 
         videoFilter: 'brightness(0.8) contrast(1.1) hue-rotate(-15deg) sepia(0.3)', 
-        paperBg: 'radial-gradient(circle at center, #fff7ed 0%, #f7bd8b 100%)' 
+        paperBg: 'radial-gradient(circle at center, #fff7ed 0%, #fcdcb8 100%)' 
       },
       nuvens: { 
         hueMin: 190, hueMax: 230, speed: 0.8, 
         glow: 'rgba(160, 220, 255, 0.4)', 
         videoFilter: 'brightness(1.1) contrast(1.0) hue-rotate(180deg)', 
-        paperBg: 'radial-gradient(circle at center, #f0f7ff 0%, #9bc9ff 100%)' 
+        paperBg: 'radial-gradient(circle at center, #f0f7ff 0%, #c4e0ff 100%)' 
       },
       portal: { 
         hueMin: 260, hueMax: 310, speed: 2.2, 
         glow: 'rgba(200, 100, 255, 0.4)', 
         videoFilter: 'brightness(0.8) contrast(1.2) saturate(1.5) hue-rotate(240deg)', 
-        paperBg: 'radial-gradient(circle at center, #f7f0ff 0%, #c993ff 100%)' 
+        paperBg: 'radial-gradient(circle at center, #f7f0ff 0%, #dfc4ff 100%)' 
       },
       livros: { 
         hueMin: 35, hueMax: 50, speed: 1.1, 
         glow: 'rgba(255, 210, 120, 0.35)', 
         videoFilter: 'brightness(0.85) contrast(1.0) sepia(0.5)', 
-        paperBg: 'radial-gradient(circle at center, #fcf5e8 0%, #d8b870 100%)' 
+        paperBg: 'radial-gradient(circle at center, #fcf5e8 0%, #e2cd9d 100%)' 
       },
       tapete: { 
         hueMin: 210, hueMax: 260, speed: 1.5, 
         glow: 'rgba(100, 150, 255, 0.4)', 
         videoFilter: 'brightness(1.0) contrast(1.1) saturate(1.2) hue-rotate(200deg)', 
-        paperBg: 'radial-gradient(circle at center, #f0f4ff 0%, #8caeeb 100%)' 
+        paperBg: 'radial-gradient(circle at center, #f0f4ff 0%, #b8cfff 100%)' 
       },
       cavalos: { 
         hueMin: 80, hueMax: 130, speed: 1.4, 
         glow: 'rgba(150, 220, 100, 0.35)', 
         videoFilter: 'brightness(1.0) contrast(1.0) hue-rotate(70deg)', 
-        paperBg: 'radial-gradient(circle at center, #f4fbf0 0%, #aadc96 100%)' 
+        paperBg: 'radial-gradient(circle at center, #f4fbf0 0%, #cbebc0 100%)' 
       },
       biblioteca: { 
         hueMin: 25, hueMax: 45, speed: 1.0, 
         glow: 'rgba(212, 175, 55, 0.4)', 
         videoFilter: 'brightness(0.8) contrast(1.0) sepia(0.6)', 
-        paperBg: 'radial-gradient(circle at center, #fdf7ea 0%, #d6b27c 100%)' 
+        paperBg: 'radial-gradient(circle at center, #fdf7ea 0%, #e6cfab 100%)' 
       }
     };
 
@@ -559,11 +562,8 @@
         `radial-gradient(circle at center, transparent 35%, ${palette.glow} 75%, rgba(2, 4, 7, 0.9) 100%)`;
       document.getElementById('bgVideo').style.filter = palette.videoFilter;
       
-      // MUDANÇA DIRETA E MARCANTE NO PERGAMINHO
-      const parchmentCard = document.getElementById('parchmentCard');
-      if (parchmentCard) {
-        parchmentCard.style.background = palette.paperBg;
-      }
+      // MUDANÇA DIRETA E NÍTIDA NO PERGAMINHO
+      document.getElementById('parchmentCard').style.background = palette.paperBg;
 
       // Explosão de brilhos da sala
       createMagicBurst(window.innerWidth / 2, window.innerHeight / 3);
